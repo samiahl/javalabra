@@ -1,0 +1,21 @@
+﻿Aihe: Olut(muisti)peli
+Klassinen muistipeli, jossa voi joko valita kuvat eri panimoiden perusteella tai sikin sokin keskenään. Ajan puitteissa toteutukseen lisätään oluihin liittyvä minitunnistuspeli.
+
+Käyttäjät: Pelaaja
+
+Toiminnot: 
+-syötetään käyttäjänimi, joka päätyy lopuksi pelin top-listoihin
+
+-valitaan muistipeli
+--valitaan muistipelin koko 
+--valitaan joko kaikki tai tietty panimo
+
+	TAI
+
+-valitaan minitietopeli
+--peli valitsee randomilla jonkun virvokkeen nimen (5 kysymystä)
+--pelaajan tulee tietää mistä panimosta ko. juoma on lähtöisin
+
+-pelataan!
+-pelin päätyttyä tulee esille all-time-top3-lista
+-peli kysyy, että pelataanko uusi peli vai lopetetaanko
