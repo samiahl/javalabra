@@ -24,11 +24,20 @@ public class Kortti {
     public int GetX(){
         return x;
     }
+    
     public int GetY(){
         return y;
     }
+    
     public String GetTyyppi(){
         return tyyppi;
     }
-            
+    
+    public void asetaKaannetyksi(){
+        onkoKaannetty = true;
+    }
+    
+    public boolean mitenPain(){
+        return onkoKaannetty;
+    }        
 }
