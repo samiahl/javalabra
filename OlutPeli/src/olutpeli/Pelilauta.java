@@ -13,21 +13,33 @@ import java.util.Collections;
  * @author samiahl
  */
 public class Pelilauta {
+
     private Kortti[][] taulu;
-    private ArrayList<Integer> arvot;
-    
+    private ArrayList<Kortti> arvot;
+    private int korttienMaara;
 
     public Pelilauta(int koko) {            // koko tulee olemaan joko 2x2, 4x4 tai 6x6
         this.taulu = new Kortti[koko][koko];
         this.arvot = new ArrayList<>();
-        
+        this.korttienMaara = koko * koko;
     }
-    
-    public void arvotKorteille(int korttienMaara){
-        for (int i = 0; i < korttienMaara/2; i++) {
-            arvot.add(i);
-            arvot.add(i);
+
+    public void arvotListaan() {
+        for (int i = 0; i < korttienMaara / 2; i++) {
+            arvot.add(new Kortti (i));
+            arvot.add(new Kortti (i));
         }
         Collections.shuffle(arvot);
     }
+
+    public void listaTaulukkoon(){
+        int listanPointteri = 0;
+        for (int i = 0; i < taulu.length; i++) {
+            for (int j = 0; j < taulu.length; j++) {
+                taulu[i][j] = arvot.get(listanPointteri);
+            }
+        }
+    }
 }
+    
+  

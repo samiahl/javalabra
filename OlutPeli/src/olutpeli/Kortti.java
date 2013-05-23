@@ -9,35 +9,29 @@ package olutpeli;
  * @author samiahl
  */
 public class Kortti {
-    private int x;
-    private int y;
-    private String tyyppi;
+    private int tyyppi;
     private boolean onkoKaannetty;
+
     
-    public Kortti(int x, int y, String tyyppi){
+    
+    public Kortti(int tyyppi) {
         this.onkoKaannetty = false;
         this.tyyppi = tyyppi;
-        this.x = x;
-        this.y = y;
+
+    }
+
+    public int GetTyyppi() {
+        return tyyppi;
         
     }
-    public int GetX(){
-        return x;
-    }
-    
-    public int GetY(){
-        return y;
-    }
-    
-    public String GetTyyppi(){
-        return tyyppi;
-    }
-    
-    public void asetaKaannetyksi(){
+
+    public void asetaKaannetyksi() {
         onkoKaannetty = true;
+        
     }
-    
-    public boolean mitenPain(){
+
+    public boolean mitenPain() {
         return onkoKaannetty;
-    }        
+        
+    }
 }
