@@ -5,7 +5,6 @@
 package olutpeli;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 /**
@@ -34,9 +33,11 @@ public class Pelilauta {
 
     public void listaTaulukkoon(){
         int listanPointteri = 0;
+        arvotListaan();
         for (int i = 0; i < taulu.length; i++) {
             for (int j = 0; j < taulu.length; j++) {
                 taulu[i][j] = arvot.get(listanPointteri);
+                listanPointteri++;
             }
         }
     }

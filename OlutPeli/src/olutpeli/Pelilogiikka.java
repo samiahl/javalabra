@@ -4,47 +4,47 @@
  */
 package olutpeli;
 
-
 /**
  *
  * @author samiahl
  */
 public class Pelilogiikka {
-    private int loydetytParit;
-    private int nostojenMaara;
-    
-    
-    
-    public Pelilogiikka(){
-        
-        
-        
+
+    private boolean ensimmainenNostettu;
+    private boolean toinenNostettu;
+
+    public Pelilogiikka() {
+
+
+        this.ensimmainenNostettu = false;
+        this.toinenNostettu = false;
+
+
+    }
+
+    public void aloitaPeli(int koko, String nimi) {
+        Pelilauta lauta = new Pelilauta(koko);
+        Pelaaja uusiPelaaja = new Pelaaja(nimi);
+        //tee käyttöliittymän käynnistys!!!
         
     }
-    public void uudenPelinAloitus(){
-        this.loydetytParit = 0;
-        this.nostojenMaara = 0;
-    }
-    
-    
-    
-    public Kortti nostaEnsimmainenKortti(){
+
+    public Kortti nostaEnsimmainenKortti() {
         return null;
     }
-    
-    public Kortti NostaToinenKortti(){
+
+    public Kortti NostaToinenKortti() {
         return null;
-        
+
     }
-    
-    public void loydettyjenParienMaaraKasvaa(){
-        loydetytParit++;
+
+    public boolean tarkistaOnkoNostetutKortitPari() {
+        if (!ensimmainenNostettu == toinenNostettu) {
+            return false;
+        }
+        return true;
     }
-    
-    public void nostojenMaaraKasvaa(){
-        nostojenMaara++;
-    }
-    
+
     
     
 }

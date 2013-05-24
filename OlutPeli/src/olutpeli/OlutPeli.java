@@ -6,6 +6,7 @@ package olutpeli;
 
 import java.util.Scanner;
 
+
 /**
  *
  * @author samiahl
@@ -17,10 +18,21 @@ public class OlutPeli {
      */
     public static void main(String[] args) {
         Scanner lukija = new Scanner(System.in);
+        Pelilogiikka logiikka = new Pelilogiikka();
         
-        System.out.println("Tervetuloa pelaamaan!");
-        System.out.println("Syötä pelilaudalle koko: 2, 4 tai 6: ");
-        Pelilauta lauta = new Pelilauta(lukija.nextInt());
+        System.out.println("Juu peliä, juu.. syötä nimi: ");
+        String nimi = lukija.nextLine();
+        
+        
+        System.out.println("Anna koko: 2, 4 tai 6!!");
+        int koko = lukija.nextInt();
+        
+        
+        logiikka.aloitaPeli(koko, nimi);
+        
+        
+        
+        
         
     }
 }

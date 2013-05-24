@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  */
 public class OlutpeliTest {
 
-    private String tyyppi;
+
 
     public OlutpeliTest() {
     }
