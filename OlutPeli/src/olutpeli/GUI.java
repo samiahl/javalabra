@@ -13,17 +13,16 @@ import javax.swing.WindowConstants;
  *
  * @author samiahl
  */
-public class GUI implements Runnable{
-    
+public class GUI implements Runnable {
+
     private JFrame frame;
-    
-    public GUI(){
-    
-}
+
+    public GUI() {
+    }
 
     @Override
     public void run() {
-      
+
         frame = new JFrame("Muistipeli");
         frame.setPreferredSize(new Dimension(500, 500));
 
@@ -33,13 +32,15 @@ public class GUI implements Runnable{
 
         frame.pack();
         frame.setVisible(true);
-        
-        
+
+
     }
 
     private void luoKomponentit(Container contentPane) {
-        
     }
-   
-    
+
+    public JFrame getFrame() {
+        return frame;
+
+    }
 }

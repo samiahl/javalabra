@@ -16,8 +16,16 @@ public class Pelilauta {
     private Kortti[][] taulu;
     private ArrayList<Kortti> arvot;
     private int korttienMaara;
+//    public static final int HELPPO = 2;
+//    public static final int NORMAALI = 4;
+//    public static final int VAIKEA = 6;
 
-    public Pelilauta(int koko) {            // koko tulee olemaan joko 2x2, 4x4 tai 6x6
+    /**
+     * koko tulee olemaan joko HELPPO(2x2), NORMAALI(4x4) tai VAIKEA(6x6)
+     *
+     * @param
+     */
+    public Pelilauta(int koko) {
         this.taulu = new Kortti[koko][koko];
         this.arvot = new ArrayList<>();
         this.korttienMaara = koko * koko;
@@ -25,13 +33,13 @@ public class Pelilauta {
 
     public void arvotListaan() {
         for (int i = 0; i < korttienMaara / 2; i++) {
-            arvot.add(new Kortti (i));
-            arvot.add(new Kortti (i));
+            arvot.add(new Kortti(i));
+            arvot.add(new Kortti(i));
         }
         Collections.shuffle(arvot);
     }
 
-    public void listaTaulukkoon(){
+    public void listaTaulukkoon() {
         int listanPointteri = 0;
         arvotListaan();
         for (int i = 0; i < taulu.length; i++) {
@@ -42,5 +50,3 @@ public class Pelilauta {
         }
     }
 }
-    
-  

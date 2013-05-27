@@ -10,13 +10,13 @@ package olutpeli;
  */
 public class Pelaaja {
 
-    private String pelaajanNimi;
+    private String kayttajatunnus;
     private int loydetytParit;
     private int yritystenMaara;
 
     public Pelaaja(String nimi) {
         
-        this.pelaajanNimi = nimi;
+        this.kayttajatunnus = nimi;
         this.loydetytParit = 0;
         this.yritystenMaara = 0;
 
@@ -31,8 +31,8 @@ public class Pelaaja {
         yritystenMaara++;
     }
     
-    public String getNimi(){
-        return pelaajanNimi;
+    public String getTunnus(){
+        return kayttajatunnus;
     }
     
     public int getYritystenMaara(){
@@ -42,4 +42,11 @@ public class Pelaaja {
     public int getloydetytParit(){
         return loydetytParit;
     }
+
+    @Override
+    public String toString() {
+        return kayttajatunnus + ", loydetytParit= " + loydetytParit + ", yritystenMaara= " + yritystenMaara;
+    }
+    
+    
 }

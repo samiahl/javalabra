@@ -9,23 +9,23 @@ package olutpeli;
  * @author samiahl
  */
 public class Kortti {
-    private int tyyppi;
+    private int arvo;
     private boolean onkoKaannetty;
 
     
     
-    public Kortti(int tyyppi) {
+    public Kortti(int arvo) {
         this.onkoKaannetty = false;
-        this.tyyppi = tyyppi;
+        this.arvo = arvo;
 
     }
     /**
-     * Palauttaa kortin tyypin.
+     * Palauttaa kortin arvon.
      * 
      */
     
-    public int GetTyyppi() {
-        return tyyppi;
+    public int GetArvo() {
+        return arvo;
         
     }
     
