@@ -44,9 +44,37 @@ public class Pelilauta {
         arvotListaan();
         for (int i = 0; i < taulu.length; i++) {
             for (int j = 0; j < taulu.length; j++) {
-                taulu[i][j] = arvot.get(listanPointteri);
-                listanPointteri++;
+                if (onkoRuutuTyhja(i, j)) {
+                    taulu[i][j] = arvot.get(listanPointteri);
+                    listanPointteri++;
+                }
+
+
             }
         }
+    }
+
+    public boolean onkoRuutuTyhja(int x, int y) {
+        if (taulu[x][y] == null) {
+            return true;
+        }
+        return false;
+    }
+
+    public void tulostaLauta() {
+        for (int i = 0; i < taulu.length; i++) {
+            for (int j = 0; j < taulu[0].length; j++) {
+                if (taulu[i][j].getArvo() < 10) {
+                    System.out.print("0" + taulu[i][j].getArvo() + "|");
+                } else {
+                    System.out.print(taulu[i][j].getArvo() + "|");
+                }
+            }
+            System.out.println("");
+        }
+    }
+    
+    public int palautaArvojenMaara(){
+        return arvot.size();
     }
 }

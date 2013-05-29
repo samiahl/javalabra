@@ -24,7 +24,7 @@ public class Kortti {
      * 
      */
     
-    public int GetArvo() {
+    public int getArvo() {
         return arvo;
         
     }
@@ -38,12 +38,16 @@ public class Kortti {
         onkoKaannetty = true;
         
     }
+    
+    public void kaannaTakaisin(){
+        onkoKaannetty = false;
+    }
     /**
      * palauttaa joko true tai false riippuen siitä miten päin kortti on
      * 
      * 
      */
-    public boolean mitenPain() {
+    public boolean onkoKaannetty() {
         return onkoKaannetty;
         
     }
