@@ -24,14 +24,12 @@ public class Pelilauta {
      * korttien määrä
      */
     private int korttienMaara;
-//    public static final int HELPPO = 2;
-//    public static final int NORMAALI = 4;
-//    public static final int VAIKEA = 6;
 
     /**
-     * luo pelilaudan
+     * luo pelilauta-olion, uuden arraylistin ja laskee korttien määrän
+     * pelilaudan koon mukaan.
      *
-     * @param koko
+     * @param koko on taulun sivun mitta arvoina.
      */
     public Pelilauta(int koko) {
         this.taulu = new Kortti[koko][koko];
@@ -39,11 +37,10 @@ public class Pelilauta {
         this.korttienMaara = koko * koko;
     }
     /**
-     * 
-     * 
-     * 
+     * Jakaa korttien määrän kahdella ja lisää jokaisen arvon
+     * kaksi kertaa listaan.
+     * Lopuksi shufflella sekoittaa arvojen järjestyksen sattumanvaraiseksi.
      */
-
     public void arvotListaan() {
         for (int i = 0; i < korttienMaara / 2; i++) {
             arvot.add(new Kortti(i));
@@ -51,7 +48,12 @@ public class Pelilauta {
         }
         Collections.shuffle(arvot);
     }
-
+    
+    /**
+     * Lisää luodun listan arvoja matriisiin. 
+     * Pointteri etenee jokaisella iteraatiolla listalla eteenpäin,
+     * kun arvo on ensin lisätty taulukkoon.
+     */
     public void listaTaulukkoon() {
         int listanPointteri = 0;
         arvotListaan();
@@ -64,14 +66,21 @@ public class Pelilauta {
             }
         }
     }
-
+    /**
+     * tarkistaa onko taulun tietty ruutu tyhjänä.
+     * @param x kertoo koordinaatin x
+     * @param y kertoo koordinaatin y
+     * @return palauttaa totuusarvon
+     */
     public boolean onkoRuutuTyhja(int x, int y) {
         if (taulu[x][y] == null) {
             return true;
         }
         return false;
     }
-
+    /**
+     * tulostaa laudan, jotta näkee, että taulukon ja listan luonti toimii.
+     */
     public void tulostaLauta() {
         for (int i = 0; i < taulu.length; i++) {
             for (int j = 0; j < taulu[0].length; j++) {
@@ -84,11 +93,17 @@ public class Pelilauta {
             System.out.println("");
         }
     }
-    
+    /**
+     * palauttaa arvolistan koon.
+     * @return 
+     */
     public int getArvojenMaara(){
         return arvot.size();
     }
-    
+    /**
+     * palauttaa arvolistan kokonaisuudessaan.
+     * @return 
+     */
     public ArrayList getListanArvot(){
         return arvot;
     }

@@ -15,11 +15,14 @@ import static org.junit.Assert.*;
  * @author samiahl
  */
 public class PelilogiikkaTest {
-    
+    Pelilauta lauta;
    
     
     @Before
     public void setUp() {
+        lauta = new Pelilauta(4);
+        
     }
+    
    
 }

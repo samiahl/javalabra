@@ -19,24 +19,22 @@ public class Kortti {
         this.arvo = arvo;
 
     }
-
     /**
      * Palauttaa kortin arvon.
      *
      */
     public int getArvo() {
         return arvo;
-
     }
-
+    
     /**
      * Pelaajan valittua tietty kortti, asettaa metodi tämän kortin arvoksi true
      *
      */
     public void asetaKaannetyksi() {
         onkoKaannetty = true;
-
     }
+    
     /**
      * kääntää käännetyn kortin takaisin.
      */
@@ -44,7 +42,6 @@ public class Kortti {
     public void kaannaTakaisin() {
         onkoKaannetty = false;
     }
-
     /**
      * palauttaa joko true tai false riippuen siitä miten päin kortti on
      *
