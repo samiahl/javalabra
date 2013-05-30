@@ -11,69 +11,80 @@ package olutpeli;
 public class Pelilogiikka {
 
     private boolean ensimmainenNostettu;
-    private boolean toinenNostettu;
     private int ekaKortti;
     private int tokaKortti;
-
+    private Pelaaja pelaaja;
+    private Pelilauta lauta;
+    private boolean kaksiKorttiaKaannettyna;
 
     public Pelilogiikka() {
 
-        this.ensimmainenNostettu = false;
-        this.toinenNostettu = false;
-
-
-
-    }
-
-    public void aloitaPeli(int koko, String nimi) {
-        Pelilauta lauta = new Pelilauta(koko);
-        Pelaaja uusiPelaaja = new Pelaaja(nimi);
-        lauta.listaTaulukkoon();
-        
-//        lauta.tulostaLauta();
-        //tee käyttöliittymän käynnistys!!!
+        pelaaja = new Pelaaja();
+        ensimmainenNostettu = true;
+        lauta = new Pelilauta(4);
+        ekaKortti = -1;
+        kaksiKorttiaKaannettyna = false;
 
     }
 
-    public String kaannaEnsimmainenKortti(Kortti kortti) {
-        if (kortti.onkoKaannetty() == true) {
-            return "on jo käännetty";
-        }
-        if (ensimmainenNostettu == false) {
-            ensimmainenNostettu = true;
-            toinenNostettu = false;
-            ekaKortti = kortti.getArvo();
-            kortti.asetaKaannetyksi();
-        }
-        return "ensimmäinen kääntö";
-    }
-
-    public String kaannaToinenKortti(Kortti kortti, Pelaaja pelaaja) {
-        if (kortti.onkoKaannetty() == true) {
-            return "on jo käännetty";
-        }
-        if (ensimmainenNostettu == true && toinenNostettu == false) {
-            kortti.asetaKaannetyksi();
+    /**
+     *
+     * @param kortti
+     * @return
+     */
+    public String kaanna(int kortti) {
+        if (ensimmainenNostettu) {
+            ekaKortti = kortti;
             ensimmainenNostettu = false;
-            toinenNostettu = true;
-            tokaKortti = kortti.getArvo();
-            if (tarkistaOnkoNostetutKortitPari() == true) {
-                pelaaja.loydettyjenParienMaaraKasvaa();
-                pelaaja.yritystenMaaraKasvaa();
-            } else {
-                pelaaja.yritystenMaaraKasvaa();
-                kortti.kaannaTakaisin();
+            return "ensimmäinen nosto";
+        }else{
+            if (kortti == ekaKortti){
+                return "sama kortti";
+            }else{
+                kaksiKorttiaKaannettyna = true;
+                ensimmainenNostettu = true;
+                tokaKortti = kortti;
+                return kaannaToinen(pelaaja, kortti);
             }
         }
-        return "toinen nosto";
-
+    }
+    
+    private String kaannaToinen(Pelaaja pelaaja, int kortti) {
+        pelaaja.yritystenMaaraKasvaa();
+        if(tarkistaOnkoNostetutKortitPari(ekaKortti, tokaKortti)){
+            pelaaja.loydettyjenParienMaaraKasvaa();
+            return "löysit parin";
+        }else{
+            return "ei ollut pari";
+        }
     }
 
-    public boolean tarkistaOnkoNostetutKortitPari() {
-        if (ekaKortti == tokaKortti) {
+    public boolean tarkistaOnkoNostetutKortitPari(int eka, int toka) {
+        if (lauta.getListanArvot().get(eka).equals(lauta.getListanArvot().get(toka))) {
             return true;
         }
         return false;
     }
 
+    public Pelaaja getPelaaja() {
+        return pelaaja;
+    }
+
+    public void asetaKaksiKorttiaKaannetyksi() {
+        kaksiKorttiaKaannettyna = true;
+    }
+
+    public boolean getKaksiKorttiaKaannettyna() {
+        return kaksiKorttiaKaannettyna;
+    }
+
+    public int getEkaKortti() {
+        return ekaKortti;
+    }
+
+    public int getTokaKortti() {
+        return tokaKortti;
+    }
+
+    
 }

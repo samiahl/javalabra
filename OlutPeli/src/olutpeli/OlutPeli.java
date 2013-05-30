@@ -35,7 +35,7 @@ public class OlutPeli {
 //
 //        logiikka.aloitaPeli(koko, nimi);
         
-            Pelilauta lauta = new Pelilauta(4);
+            Pelilauta lauta = new Pelilauta(6);
             lauta.arvotListaan();
             lauta.listaTaulukkoon();
             lauta.tulostaLauta();

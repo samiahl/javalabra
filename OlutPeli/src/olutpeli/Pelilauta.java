@@ -12,24 +12,37 @@ import java.util.Collections;
  * @author samiahl
  */
 public class Pelilauta {
-
+    /**
+     * pelilauta matriisina
+     */
     private Kortti[][] taulu;
+    /**
+     * korttien arvot arraylistissa
+     */
     private ArrayList<Kortti> arvot;
+    /**
+     * korttien määrä
+     */
     private int korttienMaara;
 //    public static final int HELPPO = 2;
 //    public static final int NORMAALI = 4;
 //    public static final int VAIKEA = 6;
 
     /**
-     * koko tulee olemaan joko HELPPO(2x2), NORMAALI(4x4) tai VAIKEA(6x6)
+     * luo pelilaudan
      *
-     * @param
+     * @param koko
      */
     public Pelilauta(int koko) {
         this.taulu = new Kortti[koko][koko];
         this.arvot = new ArrayList<>();
         this.korttienMaara = koko * koko;
     }
+    /**
+     * 
+     * 
+     * 
+     */
 
     public void arvotListaan() {
         for (int i = 0; i < korttienMaara / 2; i++) {
@@ -48,8 +61,6 @@ public class Pelilauta {
                     taulu[i][j] = arvot.get(listanPointteri);
                     listanPointteri++;
                 }
-
-
             }
         }
     }
@@ -74,7 +85,11 @@ public class Pelilauta {
         }
     }
     
-    public int palautaArvojenMaara(){
+    public int getArvojenMaara(){
         return arvot.size();
+    }
+    
+    public ArrayList getListanArvot(){
+        return arvot;
     }
 }
