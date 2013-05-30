@@ -3,3 +3,6 @@ Pe 17.5. (2h) uml-kaavio, koodin aloitus, testien harjoittelu
 Ti 21.5. (1h) sitä sun tätä
 Ke 22.5. (3h) ^
 To 23.5. (6h) tehty testejä, pari luokkaa, jotain metodeja, uusi kaavio
+ke 29.5. (2h)
+to 30.5. (5h) javadoc, testejä, pieniä muutoksia
+
