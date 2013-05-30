@@ -32,5 +32,8 @@ public class PelilautaTest {
         assertEquals(lauta.getArvojenMaara(),16);
     }
     
-    
+    @Test
+    public void onkoRuutuTyhjaPalauttaaOikein(){
+        
+    }
 }
