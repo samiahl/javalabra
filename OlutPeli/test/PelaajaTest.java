@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-import olutpeli.Pelaaja;
+import LautaJaKappaleet.Pelaaja;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -26,13 +26,13 @@ public class PelaajaTest {
 
     @Test
     public void pelaajallaTyhjäNimi(){
-        assertEquals(pelaaja.getTunnus(),"");
+        assertEquals(pelaaja.getNimi(),"");
     }
     
     @Test
     public void nimenAsettaminenToimii(){
-        pelaaja.asetaPelaajalleNimi("sami");
-        assertEquals("sami", pelaaja.getTunnus());
+        pelaaja.asetaNimi("sami");
+        assertEquals("sami", pelaaja.getNimi());
     }
     
     @Test

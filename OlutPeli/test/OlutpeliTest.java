@@ -4,9 +4,9 @@
  */
 
 import java.util.ArrayList;
-import olutpeli.Kortti;
-import olutpeli.Pelaaja;
-import olutpeli.Pelilauta;
+import LautaJaKappaleet.Kortti;
+import LautaJaKappaleet.Pelaaja;
+import LautaJaKappaleet.Pelilauta;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -57,8 +57,8 @@ public class OlutpeliTest {
         boolean vastaus = true;
         boolean vastaus2 = false;
 
-        assertEquals("true", vastaus);
-        assertEquals("false", vastaus2);
+        assertTrue(vastaus);
+        assertFalse(vastaus2);
     }
 
    

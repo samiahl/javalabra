@@ -4,7 +4,7 @@
  */
 
 
-import olutpeli.Pelilauta;
+import LautaJaKappaleet.Pelilauta;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,13 +19,13 @@ public class PelilautaTest {
 
     @Before
     public void setUp() {
-        lauta = new Pelilauta(4);
+        lauta = new Pelilauta();
 
     }
 
     @Test
     public void palauttaaArvojenMaaranOikein(){
-        lauta.arvotListaan();
+        lauta.arvotListaan(16);
         assertEquals(lauta.getArvojenMaara(),16);
     }
 }
