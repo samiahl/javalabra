@@ -206,12 +206,12 @@ public final class GUI extends JPanel implements ActionListener {
         lauta.add(nimiJalaskuriPaneeli, BorderLayout.NORTH);
     }
     
-    private void kaannaKaannetytTakaisin(){
-        
+   
+    public void  kaannaKaannetytTakaisin(int ensimmainen, int toinen) {
+        kortit[ensimmainen].setText("Öl");
+        kortit[toinen].setText("Öl");
     }
     
-    
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == lopetus) {
