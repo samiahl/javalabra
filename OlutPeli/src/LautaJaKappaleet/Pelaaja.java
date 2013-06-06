@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package olutpeli;
+package LautaJaKappaleet;
 
 /**
  * Luokka, joka luo pelaajan ja ohjailee pelaajan arvoja.
@@ -46,9 +46,9 @@ public class Pelaaja {
         yritystenMaara++;
     }
     /**
-     * Palauttaa pelaajan antaman tunnuksen.
+     * Palauttaa pelaajan antaman nimen.
      */
-    public String getTunnus(){
+    public String getNimi(){
         return kayttajatunnus;
     }
     /**
@@ -81,8 +81,9 @@ public class Pelaaja {
      * Asettaa pelaajan antaman nimen Pelaaja-oliolle.
      * @param nimi 
      */
-    public void asetaPelaajalleNimi(String nimi){
+    public void asetaNimi(String nimi){
         kayttajatunnus = nimi;
     }
+    
     
 }

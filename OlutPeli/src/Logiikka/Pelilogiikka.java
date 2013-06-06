@@ -2,7 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package olutpeli;
+package Logiikka;
+
+import LautaJaKappaleet.Pelaaja;
+import LautaJaKappaleet.Pelilauta;
 
 /**
  *Luokka, jossa on kortin kääntämisen toiminnot
@@ -32,7 +35,7 @@ public class Pelilogiikka {
      */
     private Pelilauta lauta;
     /**
-     * kertoo, että ono yksi vai kaksi korttia käännettynä.
+     * kertoo, että on yksi vai kaksi korttia käännettynä.
      */
     private boolean kaksiKorttiaKaannettyna;
 
@@ -43,7 +46,7 @@ public class Pelilogiikka {
     public Pelilogiikka() {
         pelaaja = new Pelaaja();
         ensimmainenNostettu = true;
-        lauta = new Pelilauta(4);
+        lauta = new Pelilauta();
         ekaKortti = -1;
         kaksiKorttiaKaannettyna = false;
 
@@ -58,15 +61,14 @@ public class Pelilogiikka {
      * @param moneskoKortti kertoo monesko käännetty kortti on.
      * @return kommentti kertoo mitä on tapahtuu missäkin vaiheessa.
      */
-    public String kaanna(int moneskoKortti) {
+    public int kaanna(int moneskoKortti) {
         if (ensimmainenNostettu) {
-            
             ekaKortti = moneskoKortti;
             ensimmainenNostettu = false;
-            return "ensimmäinen nosto";
+            return 1;//ensimmäinen nosto
         }else{
             if (moneskoKortti == ekaKortti){
-                return "sama kortti";
+                return 2; //sama kortti
             }else{
                 kaksiKorttiaKaannettyna = true;
                 ensimmainenNostettu = true;
@@ -85,14 +87,14 @@ public class Pelilogiikka {
      * 
      */
     
-    private String kaannaToinen(Pelaaja pelaaja, int moneskoKortti) {
+    private int kaannaToinen(Pelaaja pelaaja, int moneskoKortti) {
         pelaaja.yritystenMaaraKasvaa();
         asetaKaksiKorttiaTakaisinFalseksi();
         if(tarkistaOnkoNostetutKortitPari(ekaKortti, tokaKortti)){
             pelaaja.loydettyjenParienMaaraKasvaa();
-            return "löysit parin";
+            return 3;//löysit parin
         }else{
-            return "ei ollut pari";
+            return 4;// ei ollut pari
         }
     }
     /**
@@ -108,12 +110,7 @@ public class Pelilogiikka {
         }
         return false;
     }
-    /**
-     * palauttaa pelaaja-olion.
-     */
-    public Pelaaja getPelaaja() {
-        return pelaaja;
-    }
+
     /**
      * asettaa todeksi, jotta tiedetään kahden kortin olevan jo käännettynä 
      * meneillään olevalla vuorolla.
@@ -145,6 +142,16 @@ public class Pelilogiikka {
     public int getTokaKortti() {
         return tokaKortti;
     }
-
+    /**
+     * palauttaa pelaaja-olion.
+     */
+    public Pelaaja getPelaaja() {
+        return pelaaja;
+    }
+    
+    public Pelilauta getPelilauta(){
+        return lauta;
+    }
+    
     
 }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package olutpeli;
+package LautaJaKappaleet;
 
 /**
  *
@@ -11,6 +11,8 @@ package olutpeli;
 public class Kortti {
 
     private int arvo;
+
+    
     private boolean onkoKaannetty;
 //    private boolean ensimmäinenKortti;
 
@@ -50,5 +52,9 @@ public class Kortti {
     public boolean onkoKaannetty() {
         return onkoKaannetty;
 
+    }
+    @Override
+    public String toString() {
+        return "" +arvo;
     }
 }

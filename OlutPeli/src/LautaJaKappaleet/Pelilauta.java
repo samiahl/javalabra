@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package olutpeli;
+package LautaJaKappaleet;
 
+import LautaJaKappaleet.Kortti;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -12,6 +13,7 @@ import java.util.Collections;
  * @author samiahl
  */
 public class Pelilauta {
+
     /**
      * pelilauta matriisina
      */
@@ -24,39 +26,38 @@ public class Pelilauta {
      * korttien määrä
      */
     private int korttienMaara;
+    private int koko;
 
     /**
      * luo pelilauta-olion, uuden arraylistin ja laskee korttien määrän
      * pelilaudan koon mukaan.
-     *
-     * @param koko on taulun sivun mitta arvoina.
      */
-    public Pelilauta(int koko) {
+    public Pelilauta() {
         this.taulu = new Kortti[koko][koko];
         this.arvot = new ArrayList<>();
         this.korttienMaara = koko * koko;
     }
+
     /**
-     * Jakaa korttien määrän kahdella ja lisää jokaisen arvon
-     * kaksi kertaa listaan.
-     * Lopuksi shufflella sekoittaa arvojen järjestyksen sattumanvaraiseksi.
+     * Jakaa korttien määrän kahdella ja lisää jokaisen arvon kaksi kertaa
+     * listaan. Lopuksi shufflella sekoittaa arvojen järjestyksen
+     * sattumanvaraiseksi.
      */
-    public void arvotListaan() {
-        for (int i = 0; i < korttienMaara / 2; i++) {
+    public void arvotListaan(int korttienmaara) {
+        for (int i = 0; i < korttienmaara / 2; i++) {
             arvot.add(new Kortti(i));
             arvot.add(new Kortti(i));
         }
         Collections.shuffle(arvot);
     }
-    
+
     /**
-     * Lisää luodun listan arvoja matriisiin. 
-     * Pointteri etenee jokaisella iteraatiolla listalla eteenpäin,
-     * kun arvo on ensin lisätty taulukkoon.
+     * Lisää luodun listan arvoja matriisiin. Pointteri etenee jokaisella
+     * iteraatiolla listalla eteenpäin, kun arvo on ensin lisätty taulukkoon.
      */
     public void listaTaulukkoon() {
         int listanPointteri = 0;
-        arvotListaan();
+        // arvotListaan();
         for (int i = 0; i < taulu.length; i++) {
             for (int j = 0; j < taulu.length; j++) {
                 if (onkoRuutuTyhja(i, j)) {
@@ -66,8 +67,10 @@ public class Pelilauta {
             }
         }
     }
+
     /**
      * tarkistaa onko taulun tietty ruutu tyhjänä.
+     *
      * @param x kertoo koordinaatin x
      * @param y kertoo koordinaatin y
      * @return palauttaa totuusarvon
@@ -78,6 +81,7 @@ public class Pelilauta {
         }
         return false;
     }
+
     /**
      * tulostaa laudan, jotta näkee, että taulukon ja listan luonti toimii.
      */
@@ -93,18 +97,34 @@ public class Pelilauta {
             System.out.println("");
         }
     }
+
     /**
      * palauttaa arvolistan koon.
-     * @return 
+     *
+     * @return
      */
-    public int getArvojenMaara(){
+    public int getArvojenMaara() {
         return arvot.size();
     }
+
     /**
      * palauttaa arvolistan kokonaisuudessaan.
-     * @return 
+     *
+     * @return
      */
-    public ArrayList getListanArvot(){
+    public ArrayList getListanArvot() {
         return arvot;
     }
+
+    /**
+     *
+     * @param kortinJarjnro
+     * @return
+     */
+    public String getKorttiMerkkijonona(int kortinJarjnro) {
+        return Integer.toString(arvot.get(kortinJarjnro).getArvo());
+        
+    }
+
+    
 }
