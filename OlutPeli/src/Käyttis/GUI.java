@@ -22,26 +22,22 @@ import javax.swing.WindowConstants;
 /**
  * Luokka hoitaa pelilaudan kokoamisen ja reagoi pelaajan valintoihin
  * pelilaudalla.
- *
- * @author samiahl
+ * 
+* @author samiahl
  */
 public final class GUI extends JPanel implements ActionListener {
 
     private JFrame lauta;
-    private JFrame ikkuna;
     private JLabel yritykset;
     private JLabel loydetyt;
-    private JLabel tekstikentta;
     private JButton[] kortit;
-    private JButton lopetus;
-    private JButton uusipeli;
-    private Panel korttiPaneeli;
-    private int korttienMaaraPelilaudalla;
+    private JButton lopetusPainike;
+    private JButton uusipeliPainike;
+    private Panel paneeli;
     private int korttiParienMaara;
-    private Vaikeusaste vaikeusaste;
     private Pelilogiikka peli;
     private JLabel pelaajanNimi;
-    private int kaannettykortti;
+    private String kaannetytKortit;
 
     public GUI() {
         peli = new Pelilogiikka();
@@ -65,43 +61,15 @@ public final class GUI extends JPanel implements ActionListener {
         laitaPainikkeetLaudalle();
         laitaNimiJaLaskuritLaudalle();
         lauta.setVisible(true);
-
-
+        pelinPaatos();
 
     }
 
     /**
-     *
-     */
-//    public void run() {
-//
-//        ikkuna = new JFrame("Muistipeli");
-//        ikkuna.setPreferredSize(new Dimension(500, 500));
-//
-//        ikkuna.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//
-//        luoKomponentit(ikkuna.getContentPane());
-//
-//        ikkuna.pack();
-//        ikkuna.setVisible(true);
-//
-//
-//    }
-//
-//    private void luoKomponentit(Container contentPane) {
-//    }
-//
-//    public JFrame getFrame() {
-//        return ikkuna;
-//
-//    }
-    // TODO: miten saa käyttiksen kysymään käyttäjän nimen ja pelin tason!!!
-    /**
      * kysyy pelaajalta nimen asetusikkunan avulla.
-     *
      */
     private void kysyPelaajanNimi() {
-        peli.getPelaaja().asetaNimi(Asetusikkuna.kysyNimi("Syötä Nimesi: "));
+        peli.getPelaaja().asetaNimi(Asetusikkuna.kysyNimi("Syötä nimesi: "));
 
     }
 
@@ -115,10 +83,8 @@ public final class GUI extends JPanel implements ActionListener {
                 || parienMaara == 18)) {
             parienMaara = Asetusikkuna.kysyTaso("Valitse joko 2, 8 tai 18 paria.");
         }
-        //while ei päästä läpi!! MIKSI?!?!?!
-
         asetaKorttienMaara(parienMaara);
-
+        korttiParienMaara = parienMaara;
     }
 
     /**
@@ -126,9 +92,9 @@ public final class GUI extends JPanel implements ActionListener {
      *
      * @param korttiParienMaara
      */
-    public void asetaKorttienMaara(int korttiParienMaara) {
-        kortit = new JButton[2 * korttiParienMaara];
-        korttienMaaraPelilaudalla = kortit.length;
+    public void asetaKorttienMaara(int parienMaara) {
+        kortit = new JButton[2 * parienMaara];
+
     }
 
     /**
@@ -138,8 +104,6 @@ public final class GUI extends JPanel implements ActionListener {
         for (int i = 0; i < kortit.length; i++) {
             kortit[i] = new JButton("Öl");
             kortit[i].addActionListener(this);
-
-            //TODO:jostain oluiden kuvat!! 
         }
         peli.getPelilauta().arvotListaan(kortit.length);
     }
@@ -148,10 +112,10 @@ public final class GUI extends JPanel implements ActionListener {
      * tekee lopetus -ja uusipeli-painikkeet.
      */
     private void teePainikkeet() {
-        lopetus = new JButton("Lopeta");
-        lopetus.addActionListener(this);
-        uusipeli = new JButton("Aloita uusi");
-        uusipeli.addActionListener(this);
+        lopetusPainike = new JButton("Lopeta");
+        lopetusPainike.addActionListener(this);
+        uusipeliPainike = new JButton("Aloita uusi");
+        uusipeliPainike.addActionListener(this);
 
     }
 
@@ -161,25 +125,25 @@ public final class GUI extends JPanel implements ActionListener {
     private void teeNimiJaLaskurit() {
         loydetyt = new JLabel("Löydetyt: ");
         yritykset = new JLabel("Yritykset: ");
-        pelaajanNimi = new JLabel("Nimi: ");
+        pelaajanNimi = new JLabel("Nimi: " + peli.getPelaaja().getNimi());
     }
 
     /**
      * laittaa kortit laudalle.
      */
     private void laitaKortitLaudalle() {
-        korttiPaneeli = new Panel();
+        paneeli = new Panel();
         if (kortit.length == 4) {
-            korttiPaneeli.setLayout(new GridLayout(2, (kortit.length) / 2));
+            paneeli.setLayout(new GridLayout(2, (kortit.length) / 2));
         } else if (kortit.length == 16) {
-            korttiPaneeli.setLayout(new GridLayout(4, (kortit.length) / 4));
+            paneeli.setLayout(new GridLayout(4, (kortit.length) / 4));
         } else {
-            korttiPaneeli.setLayout(new GridLayout(6, (kortit.length) / 6));
+            paneeli.setLayout(new GridLayout(6, (kortit.length) / 6));
         }
         for (int i = 0; i < kortit.length; i++) {
-            korttiPaneeli.add(kortit[i]);
+            paneeli.add(kortit[i]);
         }
-        lauta.add(korttiPaneeli);
+        lauta.add(paneeli);
     }
 
     /**
@@ -189,8 +153,8 @@ public final class GUI extends JPanel implements ActionListener {
     private void laitaPainikkeetLaudalle() {
         Panel painikePaneeli = new Panel();
         painikePaneeli.setLayout(new GridLayout(1, 2));
-        painikePaneeli.add(lopetus);
-        painikePaneeli.add(uusipeli);
+        painikePaneeli.add(lopetusPainike);
+        painikePaneeli.add(uusipeliPainike);
         lauta.add(painikePaneeli, BorderLayout.SOUTH);
     }
 
@@ -205,37 +169,103 @@ public final class GUI extends JPanel implements ActionListener {
         nimiJalaskuriPaneeli.add(yritykset);
         lauta.add(nimiJalaskuriPaneeli, BorderLayout.NORTH);
     }
-    
-   
-    public void  kaannaKaannetytTakaisin(int ensimmainen, int toinen) {
+
+    /**
+     *
+     * @param ensimmainen
+     * @param toinen
+     */
+    public void kaannaKaannetytTakaisin(int ensimmainen, int toinen) {
         kortit[ensimmainen].setText("Öl");
         kortit[toinen].setText("Öl");
     }
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == lopetus) {
-            System.exit(0);
-        }
-        if (e.getSource() == uusipeli) {
-            peli.getPelaaja().nollaaPariLaskuri();
-            peli.getPelaaja().nollaaYritysLaskuri();
-            aloitaPeli();
-        }
-        if (!peli.getKaksiKorttiaKaannettyna()) {
-            for (int i = 0; i < kortit.length; i++) {
-                if (kortit[i] == e.getSource()) {
-                    kortit[i].setText(peli.getPelilauta().getKorttiMerkkijonona(i));
-                    kaannettykortti = peli.kaanna(i);
-                    
-                }
-            }
+
+
+    /**
+     *
+     */
+    public void tulostenTarkastus() {
+        loydetyt.setText("Löydetyt: " + peli.getPelaaja().getloydetytParit());
+        yritykset.setText("Yritykset: " + peli.getPelaaja().getYritystenMaara());
+
+    }
+
+    /**
+     *
+     */
+    public void nollaa() {
+        peli.getPelaaja().nollaaPariLaskuri();
+        peli.getPelaaja().nollaaYritysLaskuri();
+        tulostenTarkastus();
+    }
+
+    /**
+     *
+     * @param ensimmainen
+     * @param toinen
+     */
+    private void lukitseKortit(int ensimmainen, int toinen) {
+        kortit[ensimmainen].setVisible(true);
+        kortit[toinen].setVisible(true);
+        korttiParienMaara--;
+    }
+
+    /**
+     *
+     */
+    public void pelinPaatos() {
+        if (peli.getPelaaja().getloydetytParit() == korttiParienMaara) {
+            lauta.setTitle("Läpäisit pelin " + peli.getPelaaja().getYritystenMaara()
+                    + " yrityksellä.");
         }
     }
 
-    public static void main(String[] args) {
-        new GUI();
+    /**
+     *
+     */
+    private void uusiPeli() {
+        aloitaPeli();
+        kysyParienMaara();
+        teeKortit();
+        nollaa();
+        lauta.remove(paneeli);
+        laitaKortitLaudalle();
+        lauta.setVisible(true);
+    }
+    
 
+    /**
+     *
+     * @param e
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
+        if (peli.getKaksiKorttiaKaannettyna() == true) {
+            if (peli.tarkistaOnkoNostetutKortitPari(peli.getEkaKortti(), peli.getTokaKortti()) == false);
+            kaannaKaannetytTakaisin(peli.getEkaKortti(), peli.getTokaKortti());
+
+        } else if (peli.getKaksiKorttiaKaannettyna() == false) {
+            for (int i = 0; i < kortit.length; i++) {
+                if (kortit[i] == e.getSource()) {
+                    kortit[i].setText(peli.getPelilauta().getKorttiMerkkijonona(i));
+                    kaannetytKortit = peli.kaanna(i);
+                    if (kaannetytKortit.equals("Ei ollut pari")){
+                        kaannaKaannetytTakaisin(peli.getEkaKortti(), peli.getTokaKortti());
+                    }else if (kaannetytKortit.equals("Löysit parin")){
+                        lukitseKortit(peli.getEkaKortti(), peli.getTokaKortti());
+                    }
+                    peli.asetaOnkoKaksiKaannettyna(false);
+                }
+            }
+        }
+
+        if (e.getSource() == lopetusPainike) {
+            System.exit(0);
+        }
+
+        if (e.getSource() == uusipeliPainike) {
+            uusiPeli();
+        }
     }
 }

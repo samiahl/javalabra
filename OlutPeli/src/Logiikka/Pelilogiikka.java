@@ -8,11 +8,12 @@ import LautaJaKappaleet.Pelaaja;
 import LautaJaKappaleet.Pelilauta;
 
 /**
- *Luokka, jossa on kortin kääntämisen toiminnot
+ * Luokka, jossa on kortin kääntämisen toiminnot
  * 
- * @author samiahl
+* @author samiahl
  */
 public class Pelilogiikka {
+
     /**
      * kertoo onko kortti ensimmäinen vai toinen nostovuorossa oleva kortti.
      */
@@ -42,7 +43,6 @@ public class Pelilogiikka {
     /**
      * alustaa muuttujille alkuarvot.
      */
-    
     public Pelilogiikka() {
         pelaaja = new Pelaaja();
         ensimmainenNostettu = true;
@@ -53,57 +53,58 @@ public class Pelilogiikka {
     }
 
     /**
-     * Kääntämisen suorittava metodi. Tarkistaa onko kortti ensimmäinen 
-     * vai toinen kääntövuorossa oleva kortti. Tarkistaa myös, että onko kortti
-     * jo käännettynä. 
-     * Jos kortti on ensimmäinen käännettävä, sen järjestys taulussa talletetaan.
-     * 
-     * @param moneskoKortti kertoo monesko käännetty kortti on.
+     * Kääntämisen suorittava metodi. Tarkistaa onko kortti ensimmäinen vai
+     * toinen kääntövuorossa oleva kortti. Tarkistaa myös, että onko kortti jo
+     * käännettynä. Jos kortti on ensimmäinen käännettävä, sen järjestys
+     * taulussa talletetaan.
+     *     
+* @param moneskoKortti kertoo monesko käännetty kortti on.
      * @return kommentti kertoo mitä on tapahtuu missäkin vaiheessa.
      */
-    public int kaanna(int moneskoKortti) {
+    public String kaanna(int moneskoKortti) {
+        
         if (ensimmainenNostettu) {
             ekaKortti = moneskoKortti;
             ensimmainenNostettu = false;
-            return 1;//ensimmäinen nosto
-        }else{
-            if (moneskoKortti == ekaKortti){
-                return 2; //sama kortti
-            }else{
-                kaksiKorttiaKaannettyna = true;
+            return "Ensimmäinen nosto";
+        } else {
+            if (moneskoKortti == ekaKortti) {
+                return "Sama kortti";
+            } else {
+                
                 ensimmainenNostettu = true;
                 tokaKortti = moneskoKortti;
-                return kaannaToinen(pelaaja, moneskoKortti);
+                return kaannaToinen(moneskoKortti);
             }
         }
     }
+
     /**
      * Lisää pelaajan yritysten ja parien määrää(jos löytyy kaksi samaa).
-     * 
-     * 
+     *     
+*
      * @param pelaaja Pelaamassa oleva pelaaja
      * @param moneskoKortti kertoo monesko kortti on kortti on taulussa.
      * @return kommentti kertoo mitä tapahtuu missäkin vaiheessa.
-     * 
-     */
-    
-    private int kaannaToinen(Pelaaja pelaaja, int moneskoKortti) {
+     *     
+*/
+    private String kaannaToinen(int moneskoKortti) {
         pelaaja.yritystenMaaraKasvaa();
-        asetaKaksiKorttiaTakaisinFalseksi();
-        if(tarkistaOnkoNostetutKortitPari(ekaKortti, tokaKortti)){
+        if (tarkistaOnkoNostetutKortitPari(ekaKortti, tokaKortti)) {
             pelaaja.loydettyjenParienMaaraKasvaa();
-            return 3;//löysit parin
-        }else{
-            return 4;// ei ollut pari
+            return "Löysit parin";
+        } else {
+            return "Ei ollut pari";
         }
     }
+
     /**
      * tarkistaa ovatko nostetut kaksi korttia pari.
+     *
      * @param eka ensimmäinen nostettu
      * @param toka toinen nostettu
      * @return tosi tai epätosi
      */
-
     public boolean tarkistaOnkoNostetutKortitPari(int eka, int toka) {
         if (lauta.getListanArvot().get(eka).equals(lauta.getListanArvot().get(toka))) {
             return true;
@@ -112,46 +113,42 @@ public class Pelilogiikka {
     }
 
     /**
-     * asettaa todeksi, jotta tiedetään kahden kortin olevan jo käännettynä 
+     * asettaa todeksi, jotta tiedetään kahden kortin olevan jo käännettynä
      * meneillään olevalla vuorolla.
      */
-    public void asetaKaksiKorttiaKaannetyksi() {
-        kaksiKorttiaKaannettyna = true;
+    public void asetaOnkoKaksiKaannettyna(boolean onkoKaksiKaannettyna) {
+        kaksiKorttiaKaannettyna = onkoKaksiKaannettyna;
     }
-    /**
-     * asettaa takasin epätodeksi, kun pelaaja lopettaa kääntövuoron.
-     */
-    public void asetaKaksiKorttiaTakaisinFalseksi(){
-        kaksiKorttiaKaannettyna = false;
+
     /**
      * palauttaa tiedon, että onko yksi vai kaksi korttia käännettynä.
-     */    
-    }    
+     */
     public boolean getKaksiKorttiaKaannettyna() {
         return kaksiKorttiaKaannettyna;
     }
+
     /**
      * palauttaa ensimmäisen nostetun kortin.
      */
     public int getEkaKortti() {
         return ekaKortti;
     }
+
     /**
      * palauttaa toisen nostetun kortin.
      */
     public int getTokaKortti() {
         return tokaKortti;
     }
+
     /**
      * palauttaa pelaaja-olion.
      */
     public Pelaaja getPelaaja() {
         return pelaaja;
     }
-    
-    public Pelilauta getPelilauta(){
+
+    public Pelilauta getPelilauta() {
         return lauta;
     }
-    
-    
 }
