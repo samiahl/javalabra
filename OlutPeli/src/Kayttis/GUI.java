@@ -39,11 +39,10 @@ public final class GUI extends JPanel implements ActionListener {
     private Pelilogiikka peli;
     private String kaannetytKortit;
 
-    
     public GUI() {
         peli = new Pelilogiikka();
         aloitaPeli();
-        
+
 
 
     }
@@ -241,23 +240,44 @@ public final class GUI extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (peli.getKaksiKorttiaKaannettyna()==false) {
+        if (peli.getKaksiKorttiaKaannettyna() == false) {
             for (int i = 0; i < kortit.length; i++) {
                 if (kortit[i] == e.getSource()) {
                     kortit[i].setText(peli.getPelilauta().getKorttiMerkkijonona(i));
-                    kaannetytKortit = peli.kaanna(i);
-                    if (kaannetytKortit.equals("Ei ollut pari")) {
-                        kaannaKaannetytTakaisin(peli.getEkaKortti(), peli.getTokaKortti());
-                        
-//                    } else if (kaannetytKortit.equals("Löysit parin")) {
-//                        lukitseKortit(peli.getEkaKortti(), peli.getTokaKortti());
+                    if (peli.kaantoo(i) == true) {
+                    } else if (peli.toinenKaantoo(i)) {
+                        peli.asetaOnkoKaksiKaannettyna(true);
+
+//                        if (peli.tarkistaOnkoNostetutKortitPari(peli.getEkaKortti(),
+//                                peli.getTokaKortti()) == false) {
+//
+//                            kaannaKaannetytTakaisin(peli.getEkaKortti(), peli.getTokaKortti());
+//                        }
+                        // KESKEN!!!!!! TREENIT ALKOI!
                     }
-                    
+
                 }
 
             }
-
         }
+
+
+
+
+//        if (peli.getKaksiKorttiaKaannettyna()==false) {
+//            for (int i = 0; i < kortit.length; i++) {
+//                if (kortit[i] == e.getSource()) {
+//                    kortit[i].setText(peli.getPelilauta().getKorttiMerkkijonona(i));
+//                    kaannetytKortit = peli.kaanto(i);
+//                    if (kaannetytKortit.equals("Löysit parin")) {
+//                        lukitseKortit(peli.getEkaKortti(), peli.getTokaKortti());
+//                        
+//                    } else if (kaannetytKortit.equals("Ei ollut pari")) {
+//                        kaannaKaannetytTakaisin(peli.getEkaKortti(), peli.getTokaKortti());
+//                    }
+//                }
+//            }
+//        }
 
         if (e.getSource() == lopetusPainike) {
             System.exit(0);

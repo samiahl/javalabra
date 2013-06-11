@@ -7,11 +7,11 @@ package Logiikka;
 import LautaJaKappaleet.Pelaaja;
 import LautaJaKappaleet.Pelilauta;
 
-    /**
-     * Luokka, jossa on kortin kääntämisen toiminnot
-     * 
-     * @author samiahl
-     */
+/**
+ * Luokka, jossa on kortin kääntämisen toiminnot
+ *
+ * @author samiahl
+ */
 public class Pelilogiikka {
 
     /**
@@ -57,12 +57,12 @@ public class Pelilogiikka {
      * toinen kääntövuorossa oleva kortti. Tarkistaa myös, että onko kortti jo
      * käännettynä. Jos kortti on ensimmäinen käännettävä, sen järjestys
      * taulussa talletetaan.
-     *     
+     *
      * @param moneskoKortti kertoo monesko käännetty kortti on.
      * @return kommentti kertoo mitä on tapahtuu missäkin vaiheessa.
      */
-    public String kaanna(int moneskoKortti) {
-        if (ensimmainenNostettu) {
+    public String kaanto(int moneskoKortti) {
+        if (ensimmainenNostettu == true) {
             ekaKortti = moneskoKortti;
             ensimmainenNostettu = false;
             return "Ensimmäinen nosto";
@@ -73,21 +73,20 @@ public class Pelilogiikka {
                 kaksiKorttiaKaannettyna = true;
                 ensimmainenNostettu = true;
                 tokaKortti = moneskoKortti;
-                return kaannaToinen(moneskoKortti);
+                return toinenKaanto(moneskoKortti);
             }
         }
     }
 
     /**
      * Lisää pelaajan yritysten ja parien määrää(jos löytyy kaksi samaa).
-     *     
      *
      * @param pelaaja Pelaamassa oleva pelaaja
-     * @param moneskoKortti kertoo monesko kortti on kortti on taulussa.
+     * @param moneskoKortti kertoo monesko kortti on taulussa.
      * @return kommentti kertoo mitä tapahtuu missäkin vaiheessa.
-     *     
+     *
      */
-    private String kaannaToinen(int moneskoKortti) {
+    private String toinenKaanto(int moneskoKortti) {
         pelaaja.yritystenMaaraKasvaa();
         if (tarkistaOnkoNostetutKortitPari(ekaKortti, moneskoKortti)) {
             pelaaja.loydettyjenParienMaaraKasvaa();
@@ -150,4 +149,48 @@ public class Pelilogiikka {
     public Pelilauta getPelilauta() {
         return lauta;
     }
+
+    
+    
+    //ALTERNATIVE KÄÄNTÖ
+    
+    
+    public boolean kaantoo(int moneskoKortti) {
+        if (ensimmainenNostettu == true) {
+            ekaKortti = moneskoKortti;
+            ensimmainenNostettu = false;
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean toinenKaantoo(int moneskoKortti){
+        if (ensimmainenNostettu == false){
+            tokaKortti = moneskoKortti;
+            ensimmainenNostettu = true;
+            return true;
+        }
+        return false;
+    }
+    
+    
+    
+    
 }
+//public String kaanto(int moneskoKortti) {
+//        if (ensimmainenNostettu == true) {
+//            ekaKortti = moneskoKortti;
+//            ensimmainenNostettu = false;
+//            return "Ensimmäinen nosto";
+//        } else {
+//            if (moneskoKortti == ekaKortti) {
+//                return "Sama kortti";
+//            } else {
+//                kaksiKorttiaKaannettyna = true;
+//                ensimmainenNostettu = true;
+//                tokaKortti = moneskoKortti;
+//                return toinenKaanto(moneskoKortti);
+//            }
+//        }
+//    }
+
