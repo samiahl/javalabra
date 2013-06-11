@@ -30,24 +30,25 @@ public final class GUI extends JPanel implements ActionListener {
     private JFrame lauta;
     private JLabel yritykset;
     private JLabel loydetyt;
+    private JLabel pelaajanNimi;
     private JButton[] kortit;
     private JButton lopetusPainike;
     private JButton uusipeliPainike;
     private Panel paneeli;
     private int korttiParienMaara;
     private Pelilogiikka peli;
-    private JLabel pelaajanNimi;
     private String kaannetytKortit;
 
+    
     public GUI() {
         peli = new Pelilogiikka();
         aloitaPeli();
+        
 
 
     }
 
     public void aloitaPeli() {
-
         kysyPelaajanNimi();
         kysyParienMaara();
         lauta = new JFrame();
@@ -178,8 +179,8 @@ public final class GUI extends JPanel implements ActionListener {
     public void kaannaKaannetytTakaisin(int ensimmainen, int toinen) {
         kortit[ensimmainen].setText("Öl");
         kortit[toinen].setText("Öl");
+        peli.asetaOnkoKaksiKaannettyna(false);
     }
-
 
     /**
      *
@@ -208,6 +209,7 @@ public final class GUI extends JPanel implements ActionListener {
         kortit[ensimmainen].setVisible(true);
         kortit[toinen].setVisible(true);
         korttiParienMaara--;
+        peli.asetaOnkoKaksiKaannettyna(false);
     }
 
     /**
@@ -232,7 +234,6 @@ public final class GUI extends JPanel implements ActionListener {
         laitaKortitLaudalle();
         lauta.setVisible(true);
     }
-    
 
     /**
      *
@@ -240,24 +241,22 @@ public final class GUI extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        if (peli.getKaksiKorttiaKaannettyna() == true) {
-            if (peli.tarkistaOnkoNostetutKortitPari(peli.getEkaKortti(), peli.getTokaKortti()) == false);
-            kaannaKaannetytTakaisin(peli.getEkaKortti(), peli.getTokaKortti());
-
-        } else if (peli.getKaksiKorttiaKaannettyna() == false) {
+        if (peli.getKaksiKorttiaKaannettyna()==false) {
             for (int i = 0; i < kortit.length; i++) {
                 if (kortit[i] == e.getSource()) {
                     kortit[i].setText(peli.getPelilauta().getKorttiMerkkijonona(i));
                     kaannetytKortit = peli.kaanna(i);
-                    if (kaannetytKortit.equals("Ei ollut pari")){
+                    if (kaannetytKortit.equals("Ei ollut pari")) {
                         kaannaKaannetytTakaisin(peli.getEkaKortti(), peli.getTokaKortti());
-                    }else if (kaannetytKortit.equals("Löysit parin")){
-                        lukitseKortit(peli.getEkaKortti(), peli.getTokaKortti());
+                        
+//                    } else if (kaannetytKortit.equals("Löysit parin")) {
+//                        lukitseKortit(peli.getEkaKortti(), peli.getTokaKortti());
                     }
-                    peli.asetaOnkoKaksiKaannettyna(false);
+                    
                 }
+
             }
+
         }
 
         if (e.getSource() == lopetusPainike) {

@@ -7,11 +7,11 @@ package Logiikka;
 import LautaJaKappaleet.Pelaaja;
 import LautaJaKappaleet.Pelilauta;
 
-/**
- * Luokka, jossa on kortin kääntämisen toiminnot
- * 
-* @author samiahl
- */
+    /**
+     * Luokka, jossa on kortin kääntämisen toiminnot
+     * 
+     * @author samiahl
+     */
 public class Pelilogiikka {
 
     /**
@@ -58,11 +58,10 @@ public class Pelilogiikka {
      * käännettynä. Jos kortti on ensimmäinen käännettävä, sen järjestys
      * taulussa talletetaan.
      *     
-* @param moneskoKortti kertoo monesko käännetty kortti on.
+     * @param moneskoKortti kertoo monesko käännetty kortti on.
      * @return kommentti kertoo mitä on tapahtuu missäkin vaiheessa.
      */
     public String kaanna(int moneskoKortti) {
-        
         if (ensimmainenNostettu) {
             ekaKortti = moneskoKortti;
             ensimmainenNostettu = false;
@@ -71,7 +70,7 @@ public class Pelilogiikka {
             if (moneskoKortti == ekaKortti) {
                 return "Sama kortti";
             } else {
-                
+                kaksiKorttiaKaannettyna = true;
                 ensimmainenNostettu = true;
                 tokaKortti = moneskoKortti;
                 return kaannaToinen(moneskoKortti);
@@ -82,15 +81,15 @@ public class Pelilogiikka {
     /**
      * Lisää pelaajan yritysten ja parien määrää(jos löytyy kaksi samaa).
      *     
-*
+     *
      * @param pelaaja Pelaamassa oleva pelaaja
      * @param moneskoKortti kertoo monesko kortti on kortti on taulussa.
      * @return kommentti kertoo mitä tapahtuu missäkin vaiheessa.
      *     
-*/
+     */
     private String kaannaToinen(int moneskoKortti) {
         pelaaja.yritystenMaaraKasvaa();
-        if (tarkistaOnkoNostetutKortitPari(ekaKortti, tokaKortti)) {
+        if (tarkistaOnkoNostetutKortitPari(ekaKortti, moneskoKortti)) {
             pelaaja.loydettyjenParienMaaraKasvaa();
             return "Löysit parin";
         } else {
@@ -106,7 +105,7 @@ public class Pelilogiikka {
      * @return tosi tai epätosi
      */
     public boolean tarkistaOnkoNostetutKortitPari(int eka, int toka) {
-        if (lauta.getListanArvot().get(eka).equals(lauta.getListanArvot().get(toka))) {
+        if ((lauta.getListanArvot().get(eka)).equals(lauta.getListanArvot().get(toka))) {
             return true;
         }
         return false;
