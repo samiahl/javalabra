@@ -17,7 +17,7 @@ public class Pelilogiikka {
     /**
      * kertoo onko kortti ensimmäinen vai toinen nostovuorossa oleva kortti.
      */
-    private boolean ensimmainenNostettu;
+    private boolean ensimmainenNostovuorossa;
     /**
      * vuoron ensimmäinen nostettu kortti.
      */
@@ -45,7 +45,7 @@ public class Pelilogiikka {
      */
     public Pelilogiikka() {
         pelaaja = new Pelaaja();
-        ensimmainenNostettu = true;
+        ensimmainenNostovuorossa = true;
         lauta = new Pelilauta();
         ekaKortti = -1;
         kaksiKorttiaKaannettyna = false;
@@ -62,16 +62,16 @@ public class Pelilogiikka {
      * @return kommentti kertoo mitä on tapahtuu missäkin vaiheessa.
      */
     public String kaanto(int moneskoKortti) {
-        if (ensimmainenNostettu == true) {
-            ekaKortti = moneskoKortti;
-            ensimmainenNostettu = false;
+        if (ensimmainenNostovuorossa == true) {
+            asetaEkaKortti(moneskoKortti);
+            ensimmainenNostovuorossa = false;
             return "Ensimmäinen nosto";
         } else {
             if (moneskoKortti == ekaKortti) {
                 return "Sama kortti";
             } else {
                 kaksiKorttiaKaannettyna = true;
-                ensimmainenNostettu = true;
+                ensimmainenNostovuorossa = true;
                 tokaKortti = moneskoKortti;
                 return toinenKaanto(moneskoKortti);
             }
@@ -88,7 +88,8 @@ public class Pelilogiikka {
      */
     private String toinenKaanto(int moneskoKortti) {
         pelaaja.yritystenMaaraKasvaa();
-        if (tarkistaOnkoNostetutKortitPari(ekaKortti, moneskoKortti)) {
+        asetaTokaKortti(moneskoKortti);
+        if (tarkistaOnkoNostetutKortitPari()) {
             pelaaja.loydettyjenParienMaaraKasvaa();
             return "Löysit parin";
         } else {
@@ -103,8 +104,8 @@ public class Pelilogiikka {
      * @param toka toinen nostettu
      * @return tosi tai epätosi
      */
-    public boolean tarkistaOnkoNostetutKortitPari(int eka, int toka) {
-        if ((lauta.getListanArvot().get(eka)).equals(lauta.getListanArvot().get(toka))) {
+    public boolean tarkistaOnkoNostetutKortitPari() {
+        if (ekaKortti == tokaKortti) {
             return true;
         }
         return false;
@@ -123,6 +124,14 @@ public class Pelilogiikka {
      */
     public boolean getKaksiKorttiaKaannettyna() {
         return kaksiKorttiaKaannettyna;
+    }
+
+    public void asetaEkaKortti(int i) {
+        ekaKortti = i;
+    }
+
+    public void asetaTokaKortti(int i) {
+        tokaKortti = i;
     }
 
     /**
@@ -149,48 +158,25 @@ public class Pelilogiikka {
     public Pelilauta getPelilauta() {
         return lauta;
     }
-
-    
-    
     //ALTERNATIVE KÄÄNTÖ
-    
-    
     public boolean kaantoo(int moneskoKortti) {
-        if (ensimmainenNostettu == true) {
+        if (ensimmainenNostovuorossa == true) {
             ekaKortti = moneskoKortti;
-            ensimmainenNostettu = false;
+            ensimmainenNostovuorossa = false;
             return true;
         }
         return false;
     }
     
     public boolean toinenKaantoo(int moneskoKortti){
-        if (ensimmainenNostettu == false){
+        if (ensimmainenNostovuorossa == false){
             tokaKortti = moneskoKortti;
-            ensimmainenNostettu = true;
+            if( tarkistaOnkoNostetutKortitPari()){
+                return false;
+            }
+            ensimmainenNostovuorossa = true;
             return true;
         }
         return false;
     }
-    
-    
-    
-    
 }
-//public String kaanto(int moneskoKortti) {
-//        if (ensimmainenNostettu == true) {
-//            ekaKortti = moneskoKortti;
-//            ensimmainenNostettu = false;
-//            return "Ensimmäinen nosto";
-//        } else {
-//            if (moneskoKortti == ekaKortti) {
-//                return "Sama kortti";
-//            } else {
-//                kaksiKorttiaKaannettyna = true;
-//                ensimmainenNostettu = true;
-//                tokaKortti = moneskoKortti;
-//                return toinenKaanto(moneskoKortti);
-//            }
-//        }
-//    }
-
