@@ -1,3 +1,5 @@
+Alkuperäinen aihemäärittely:
+
 ﻿Aihe: Olut(muisti)peli
 Klassinen muistipeli, jossa voi joko valita kuvat eri panimoiden perusteella tai sikin sokin keskenään. Ajan puitteissa toteutukseen lisätään oluihin liittyvä minitunnistuspeli.
 
@@ -19,3 +21,29 @@ Toiminnot:
 -pelataan!
 -pelin päätyttyä tulee esille all-time-top3-lista
 -peli kysyy, että pelataanko uusi peli vai lopetetaanko
+
+
+HUOM!!!
+
+
+PÄIVITETTY AIHEMÄÄRITTELY, kun ei aika riittänyt luomaan alkuperäistä visiota.
+
+Aihe: Muistipeli
+Klassinen muistipeli, jossa etsitään pareja kääntelemällä kortteja. 
+Korteissa on kuvien sijasta numeroita.
+
+Käyttäjä: Pelaaja
+
+Toiminnot:
+Alustus:
+1.Pelaaja syöttää nimensä (top-listoja ei ole)
+2.valitaan muistipelin parien määrä (joko 2, 8 tai 18 paria)
+
+Peli:
+Pelaaja etsii klikkailemalla pareja laudalta. Jos pari löytyy, poistaa peli parin laudalta.
+Muuten peli käntää parin takaisin väärinpäin.
+
+Muuta:
+Pelissä on kaksi nappia lisäksi. Lopetus-painike päättää pelin ja 
+Aloita uusi-painike aloittaa nimensä mukaisesti uuden pelin.
+

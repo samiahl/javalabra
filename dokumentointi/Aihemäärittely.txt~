@@ -4,20 +4,18 @@ Klassinen muistipeli, jossa voi joko valita kuvat eri panimoiden perusteella tai
 Käyttäjät: Pelaaja
 
 Toiminnot: 
-syötetään käyttäjänimi, joka päätyy lopuksi pelin top-listoihin
+-syötetään käyttäjänimi, joka päätyy lopuksi pelin top-listoihin
 
-valitaan muistipeli
-valitaan muistipelin koko 
- valitaan joko kaikki tai tietty panimo
+-valitaan muistipeli
+--valitaan muistipelin koko 
+--valitaan joko kaikki tai tietty panimo
 
 	TAI
 
-valitaan minitietopeli
-peli valitsee randomilla jonkun virvokkeen nimen (5 kysymystä)
-pelaajan tulee tietää mistä panimosta ko. juoma on lähtöisin
+-valitaan minitietopeli
+--peli valitsee randomilla jonkun virvokkeen nimen (5 kysymystä)
+--pelaajan tulee tietää mistä panimosta ko. juoma on lähtöisin
 
-pelataan!
-pelin päätyttyä tulee esille all-time-top3-lista
-peli kysyy, että pelataanko uusi peli vai lopetetaanko
-
-
+-pelataan!
+-pelin päätyttyä tulee esille all-time-top3-lista
+-peli kysyy, että pelataanko uusi peli vai lopetetaanko
