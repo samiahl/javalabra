@@ -15,6 +15,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * 
+ * testaa yleistä käyttölogiikkaa
  *
  * @author samiahl
  */
@@ -87,7 +89,7 @@ public class PelilogiikkaTest {
     }
 
     @Test
-    public void toiseksiKaannetyllaKortillaKortillaOnOikeaJarjestysNumero() {
+    public void tokaKorttiOnOikein() {
         ArrayList<Integer> eriArvot = new ArrayList<>();
         for (int i = 1; i <= 36; i++) {
             eriArvot.add(i);

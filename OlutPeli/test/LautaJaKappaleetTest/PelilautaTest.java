@@ -11,7 +11,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * testaa pelilaudan toimintoja
+ * 
  * @author samiahl
  */
 public class PelilautaTest {
