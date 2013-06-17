@@ -5,10 +5,7 @@
 package Kayttis;
 
 import Logiikka.*;
-import LautaJaKappaleet.*;
 import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
@@ -20,37 +17,77 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 /**
- * Luokka hoitaa pelilaudan kokoamisen ja reagoi pelaajan valintoihin
- * pelilaudalla.
+ * Luokka muodostaa graafisen käyttöliittymän.
+ * Luokka hoitaa pelilaudan kokoamisen ja reagoi pelaajan tekemiin
+ * valintoihin pelilaudalla.
  * 
 * @author samiahl
  */
 public final class GUI extends JPanel implements ActionListener {
 
+    /**
+     * pelilauta
+     */
     private JFrame lauta;
+    /**
+     * yritysten määrä
+     */
     private JLabel yritykset;
+    /**
+     * löydettyjen parien määrä
+     */
     private JLabel loydetyt;
+    /**
+     * yläpalkkiin tuleva pelaajan nimi
+     */
     private JLabel pelaajanNimi;
+    /**
+     * korttien painikkeet
+     */
     private JButton[] kortit;
+    /**
+     * laudassa oleva lopetuspainike
+     */
     private JButton lopetusPainike;
+    /**
+     * laudassa oleva uuden pelin painike
+     */
     private JButton uusipeliPainike;
+    /**
+     * paneeli säilyttää kortit, jotka tulevat laudalle
+     */
     private Panel paneeli;
+    /**
+     * pelaajan syöttämä parien määrä
+     */
     private int korttiParienMaara;
-    private int kaannettyjenMaara;
+    /**
+     * Pelilogiikka-luokka
+     */
     private Pelilogiikka peli;
+    /**
+     * Pelilogiikka-luokan kaanto-metodista tuleva ilmoitus, että mitä havaittiin 
+     * kahta korttia painettaessa
+     */
     private String kaannetytKortit;
+    /**
+     * Ajan kulkua operoiva Aika-luokka
+     */
+    private Aika timer;
 
+    
     public GUI() {
         peli = new Pelilogiikka();
         aloitaPeli();
-
-
+        timer = new Aika(this, 600);
 
 
     }
+    /**
+     * Tekee pelilaudan kysymällä pelaajalta nimeä ja parien määrää.
+     */
 
     public void aloitaPeli() {
-        kaannettyjenMaara = 1;
         kysyPelaajanNimi();
         kysyParienMaara();
         lauta = new JFrame();
@@ -64,7 +101,7 @@ public final class GUI extends JPanel implements ActionListener {
         laitaPainikkeetLaudalle();
         laitaNimiJaLaskuritLaudalle();
         lauta.setVisible(true);
-        pelinPaatos();
+        pelinPaatteeksiKerroKuinkaMonellaYrityksellaPeliLoppui();
 
     }
 
@@ -91,7 +128,7 @@ public final class GUI extends JPanel implements ActionListener {
     }
 
     /**
-     * tekee oikean määrän kortteja.
+     * Tekee oikean määrän kortteja.
      *
      * @param korttiParienMaara
      */
@@ -101,7 +138,7 @@ public final class GUI extends JPanel implements ActionListener {
     }
 
     /**
-     * tekee kortit.
+     * Tekee kortit.
      */
     private void teeKortit() {
         for (int i = 0; i < kortit.length; i++) {
@@ -112,7 +149,7 @@ public final class GUI extends JPanel implements ActionListener {
     }
 
     /**
-     * tekee lopetus -ja uusipeli-painikkeet.
+     * Tekee lopetus -ja uusipeli-painikkeet.
      */
     private void teePainikkeet() {
         lopetusPainike = new JButton("Lopeta");
@@ -123,7 +160,7 @@ public final class GUI extends JPanel implements ActionListener {
     }
 
     /**
-     * tekee laskuri -ja nimiOtsikot .
+     * Tekee laskuri -ja nimiOtsikot .
      */
     private void teeNimiJaLaskurit() {
         loydetyt = new JLabel("Löydetyt: ");
@@ -132,7 +169,7 @@ public final class GUI extends JPanel implements ActionListener {
     }
 
     /**
-     * laittaa kortit laudalle.
+     * Laittaa kortit laudalle.
      */
     private void laitaKortitLaudalle() {
         paneeli = new Panel();
@@ -150,7 +187,7 @@ public final class GUI extends JPanel implements ActionListener {
     }
 
     /**
-     * laittaa tehdyt painikkeet laudalle.
+     * Laittaa tehdyt painikkeet laudalle.
      *
      */
     private void laitaPainikkeetLaudalle() {
@@ -172,52 +209,73 @@ public final class GUI extends JPanel implements ActionListener {
         nimiJalaskuriPaneeli.add(yritykset);
         lauta.add(nimiJalaskuriPaneeli, BorderLayout.NORTH);
     }
-
+    
     /**
-     *
-     * @param ensimmainen
-     * @param toinen
+     * Metodi ohjaa eteenpäin käskyt käännöistä sen perusteella, että onko 
+     * kaksi korttia pari vai ei. 
+     * Jos on pari, kortit poistetaan. 
+     * Jos ei ole pari, kortit käännetään takaisin väärin päin.
      */
-    public void kaannaKaannetytTakaisin(int ensimmainen, int toinen) {
-        kortit[ensimmainen].setText("Öl");
-        kortit[toinen].setText("Öl");
+    
+    public void timerinAjanPaatteeksiSuoritettavatKaannot() {
+        if (kaannetytKortit.equals("Ei ollut pari")) {
+            kaannaKaannetytTakaisinJotkaEivatOlleetPari(peli.getEkaKortti(), peli.getTokaKortti());
+            
+        } else if (kaannetytKortit.equals("Löysit parin")) {
+            poistaKortitPelilautaltaNiidenOllessaSamat(peli.getEkaKortti(), peli.getTokaKortti());
+        }
         peli.asetaOnkoKaksiKaannettyna(false);
+        tarkastaTuloksetNostovuoronPaatteeksi();
+        pelinPaatteeksiKerroKuinkaMonellaYrityksellaPeliLoppui();
     }
 
     /**
-     *
+     * Poistaa pelilaudalta löydetyn parin kokonaan.
+     * 
+     * @param ensimmainen
+     * @param toinen
      */
-    public void tulostenTarkastus() {
+    private void poistaKortitPelilautaltaNiidenOllessaSamat(int ensimmainen, int toinen) {
+        kortit[ensimmainen].setVisible(false);
+        kortit[toinen].setVisible(false);
+    }
+
+    /**
+     * Kääntää kortit takaisin väärin päin.
+     * 
+     * @param ensimmainen käännetty kortti
+     * @param toinen käännetty kortti
+     */
+    public void kaannaKaannetytTakaisinJotkaEivatOlleetPari(int ensimmainen, int toinen) {
+        kortit[ensimmainen].setText("Öl");
+        kortit[toinen].setText("Öl");
+
+    }
+
+    /**
+     * Tarkastaa nostojen ja yritysten määrän.
+     */
+    public void tarkastaTuloksetNostovuoronPaatteeksi() {
         loydetyt.setText("Löydetyt: " + peli.getPelaaja().getloydetytParit());
         yritykset.setText("Yritykset: " + peli.getPelaaja().getYritystenMaara());
 
     }
 
     /**
-     *
+     * Nollaa pelaajalla olevat laskurit yrityksistä ja nostetuista.
      */
-    public void nollaa() {
+    public void nollaaNostettujenJaYritystenLaskurit() {
         peli.getPelaaja().nollaaPariLaskuri();
         peli.getPelaaja().nollaaYritysLaskuri();
-        tulostenTarkastus();
+        tarkastaTuloksetNostovuoronPaatteeksi();
     }
 
     /**
-     *
-     * @param ensimmainen
-     * @param toinen
+     * Tarkistaa onko pelaaja kääntänyt jo kaikki kortit. 
+     * Jos on, metodi ilmoittaa yläpalkissa, kuinka monella siirrolla peli päättyi.
+     * 
      */
-    private void lukitseKortit(int ensimmainen, int toinen) {
-        kortit[ensimmainen].setVisible(true);
-        kortit[toinen].setVisible(true);
-        korttiParienMaara--;
-        peli.asetaOnkoKaksiKaannettyna(false);
-    }
-
-    /**
-     *
-     */
-    public void pelinPaatos() {
+    public void pelinPaatteeksiKerroKuinkaMonellaYrityksellaPeliLoppui() {
         if (peli.getPelaaja().getloydetytParit() == korttiParienMaara) {
             lauta.setTitle("Läpäisit pelin " + peli.getPelaaja().getYritystenMaara()
                     + " yrityksellä.");
@@ -225,90 +283,53 @@ public final class GUI extends JPanel implements ActionListener {
     }
 
     /**
-     *
+     * Aloittaa uuden pelin. 
+     * Kun pelaaja haluaa aloittaa tason alusta tai vaihtaa tasoa niin metodi 
+     * "jakaa" uudet kortit samalle pelialustalle ilman että pelaajan tarvitsee 
+     * vaihtaa enää nimeään.
      */
-    private void uusiPeli() {
-        aloitaPeli();
+    private void aloitaUusiPeliPainikkeenKautta() {
+        peli.alustus();
         kysyParienMaara();
         teeKortit();
-        nollaa();
+        nollaaNostettujenJaYritystenLaskurit();
+        pelinPaatteeksiKerroKuinkaMonellaYrityksellaPeliLoppui();
         lauta.remove(paneeli);
         laitaKortitLaudalle();
         lauta.setVisible(true);
     }
 
     /**
-     *
-     * @param e
+     * Operoi hiiren klikkausten mukaisesti.
+     * Lopetuspainike lopettaa pelin.
+     * UusiPeliPainike aloittaa uuden peli, pelaajan haluaman tason mukaisesti.
+     * 
+     * Kun kortteja on käännetty kaksi kappaletta, metodi käynnistää timerin, 
+     * joka laittaa eteenpäin joko kutsun poistaa kortit laudalta tai kääntää ne 
+     * takaisin väärin päin. 
+     * 
+     * @param e mistä painetaan
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if (peli.getKaksiKorttiaKaannettyna() == true) {
-//            for (int i = 0; i < kortit.length; i++) {
-//                if (kortit[i] == e.getSource()) {
-//                    kortit[i].setText(peli.getPelilauta().getKorttiMerkkijonona(i));
-//                    
-//                    if (kaannettyjenMaara%2 == 1){
-//                        peli.asetaEkaKortti(i);
-//                        kaannettyjenMaara++;
-//                        peli.asetaOnkoKaksiKaannettyna(false);
-//                    
-//                    }else if (kaannettyjenMaara%2 == 0){
-//                        peli.asetaTokaKortti(i);
-//                        kaannettyjenMaara++;
-//                        if (!(peli.getEkaKortti() == peli.getTokaKortti())){
-//                            kaannaKaannetytTakaisin(peli.getEkaKortti(), peli.getTokaKortti());
-//                            peli.asetaOnkoKaksiKaannettyna(true);
-//                        }
-//                    }
-//
-//                }
-//
-//            }
-//        }
-
-
         if (peli.getKaksiKorttiaKaannettyna() == false) {
             for (int i = 0; i < kortit.length; i++) {
                 if (kortit[i] == e.getSource()) {
                     kortit[i].setText(peli.getPelilauta().getKorttiMerkkijonona(i));
-                    if (peli.kaantoo(i) == true) {
-                    } else if (peli.toinenKaantoo(i)) {
-                        peli.asetaOnkoKaksiKaannettyna(true);
-
-//                   if (peli.tarkistaOnkoNostetutKortitPari(peli.getEkaKortti(),
-//                  peli.getTokaKortti()) == false) {
-//
-//                   kaannaKaannetytTakaisin(peli.getEkaKortti(), peli.getTokaKortti());
-// }
-                        // KESKEN!!!!!! TREENIT ALKOI!
+                    kaannetytKortit = peli.kaanto(i);
+                    if (kaannetytKortit.equals("Löysit parin") || kaannetytKortit.equals("Ei ollut pari")) {
+                        timer.start();
                     }
                 }
             }
         }
-
-//                        if (!peli.getKaksiKorttiaKaannettyna()) {
-//                            for (int i = 0; i < kortit.length; i++) {
-//                                if (kortit[i] == e.getSource()) {
-//                                    kortit[i].setText(peli.getPelilauta().getKorttiMerkkijonona(i));
-//                                    kaannetytKortit = peli.kaanto(i);
-//                                    if (kaannetytKortit.equals("Löysit parin")) {
-//                                        lukitseKortit(peli.getEkaKortti(), peli.getTokaKortti());
-//
-//                                    } else if (kaannetytKortit.equals("Ei ollut pari")) {
-//                                        kaannaKaannetytTakaisin(peli.getEkaKortti(), peli.getTokaKortti());
-//                                    }
-//                                }
-//                            }
-//                        }
 
         if (e.getSource() == lopetusPainike) {
             System.exit(0);
         }
 
         if (e.getSource() == uusipeliPainike) {
-            uusiPeli();
-
+            aloitaUusiPeliPainikkeenKautta();
         }
     }
 }

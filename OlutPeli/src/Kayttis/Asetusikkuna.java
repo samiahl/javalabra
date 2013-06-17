@@ -8,6 +8,7 @@ import javax.swing.*;
 
 /**
  *Luokka tekee ikkunoita, joissa kysytään käyttäjältä kysymyksiä
+ * 
  * @author samiahl
  */
 

@@ -7,13 +7,11 @@ package Main;
 import Kayttis.GUI;
 
 /**
- *
+ * Luokka käynnistää graafisen käyttöliittymän, joka käynnistää pelin.
  * @author samiahl
  */
 public class Main {
     public static void main(String[] args) {
         new GUI();
-
-        
     }
 }

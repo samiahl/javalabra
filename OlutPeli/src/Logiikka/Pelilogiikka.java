@@ -41,15 +41,22 @@ public class Pelilogiikka {
     private boolean kaksiKorttiaKaannettyna;
 
     /**
-     * alustaa muuttujille alkuarvot.
+     * Konstruktori luo uuden pelaajan ja käyttää alustus-metodia
      */
     public Pelilogiikka() {
         pelaaja = new Pelaaja();
-        ensimmainenNostovuorossa = true;
+        alustus();
+        
+    }
+    /**
+     * Metodi luo uuden pelilaudan ja alustaa tarvittavat alkuarvot uuden pelin 
+     * aloittamista varten
+     */
+    public void alustus() {
         lauta = new Pelilauta();
+        ensimmainenNostovuorossa = true;
         ekaKortti = -1;
         kaksiKorttiaKaannettyna = false;
-
     }
 
     /**
@@ -62,34 +69,35 @@ public class Pelilogiikka {
      * @return kommentti kertoo mitä on tapahtuu missäkin vaiheessa.
      */
     public String kaanto(int moneskoKortti) {
-        if (ensimmainenNostovuorossa == true) {
+        if (ensimmainenNostovuorossa) {
             asetaEkaKortti(moneskoKortti);
-            ensimmainenNostovuorossa = false;
+            asetaEnsimmainenNostovuorossa(false);
             return "Ensimmäinen nosto";
         } else {
             if (moneskoKortti == ekaKortti) {
                 return "Sama kortti";
             } else {
                 kaksiKorttiaKaannettyna = true;
-                ensimmainenNostovuorossa = true;
-                tokaKortti = moneskoKortti;
-                return toinenKaanto(moneskoKortti);
+                asetaEnsimmainenNostovuorossa(true);
+                asetaTokaKortti(moneskoKortti);
+                return toinenKaanto(moneskoKortti, pelaaja);
             }
         }
     }
 
     /**
      * Lisää pelaajan yritysten ja parien määrää(jos löytyy kaksi samaa).
+     * Palauttaa käyttöliittymälle merkkijonon, joka kertoo onko kaksi käännettyä 
+     * korttia pari vai ei.
      *
      * @param pelaaja Pelaamassa oleva pelaaja
      * @param moneskoKortti kertoo monesko kortti on taulussa.
      * @return kommentti kertoo mitä tapahtuu missäkin vaiheessa.
      *
      */
-    private String toinenKaanto(int moneskoKortti) {
+    private String toinenKaanto(int moneskoKortti, Pelaaja pelaaja) {
         pelaaja.yritystenMaaraKasvaa();
-        asetaTokaKortti(moneskoKortti);
-        if (tarkistaOnkoNostetutKortitPari()) {
+        if (tarkistaOnkoNostetutKortitPari(ekaKortti, moneskoKortti)) {
             pelaaja.loydettyjenParienMaaraKasvaa();
             return "Löysit parin";
         } else {
@@ -104,24 +112,21 @@ public class Pelilogiikka {
      * @param toka toinen nostettu
      * @return tosi tai epätosi
      */
-    public boolean tarkistaOnkoNostetutKortitPari() {
-        if (ekaKortti == tokaKortti) {
+    public boolean tarkistaOnkoNostetutKortitPari(int ensimmainen, int toinen) {
+        if (lauta.getListanArvot().get(ensimmainen).equals(lauta.getListanArvot().get(toinen))) {
             return true;
         }
         return false;
     }
-
+    
     /**
-     * asettaa todeksi, jotta tiedetään kahden kortin olevan jo käännettynä
-     * meneillään olevalla vuorolla.
+     * Seuraavat metodit ovat kaikki aseta -tai get-metodeita, joten on ehkä hieman 
+     * tarpeetonta selvittää niiden toimintoja 
      */
     public void asetaOnkoKaksiKaannettyna(boolean onkoKaksiKaannettyna) {
         kaksiKorttiaKaannettyna = onkoKaksiKaannettyna;
     }
 
-    /**
-     * palauttaa tiedon, että onko yksi vai kaksi korttia käännettynä.
-     */
     public boolean getKaksiKorttiaKaannettyna() {
         return kaksiKorttiaKaannettyna;
     }
@@ -134,23 +139,14 @@ public class Pelilogiikka {
         tokaKortti = i;
     }
 
-    /**
-     * palauttaa ensimmäisen nostetun kortin.
-     */
     public int getEkaKortti() {
         return ekaKortti;
     }
 
-    /**
-     * palauttaa toisen nostetun kortin.
-     */
     public int getTokaKortti() {
         return tokaKortti;
     }
 
-    /**
-     * palauttaa pelaaja-olion.
-     */
     public Pelaaja getPelaaja() {
         return pelaaja;
     }
@@ -158,25 +154,16 @@ public class Pelilogiikka {
     public Pelilauta getPelilauta() {
         return lauta;
     }
-    //ALTERNATIVE KÄÄNTÖ
-    public boolean kaantoo(int moneskoKortti) {
-        if (ensimmainenNostovuorossa == true) {
-            ekaKortti = moneskoKortti;
-            ensimmainenNostovuorossa = false;
-            return true;
-        }
-        return false;
+
+    public void asetaEnsimmainenNostovuorossa(boolean a) {
+        ensimmainenNostovuorossa = a;
     }
-    
-    public boolean toinenKaantoo(int moneskoKortti){
-        if (ensimmainenNostovuorossa == false){
-            tokaKortti = moneskoKortti;
-            if( tarkistaOnkoNostetutKortitPari()){
-                return false;
-            }
-            ensimmainenNostovuorossa = true;
-            return true;
-        }
-        return false;
+
+    public boolean getEnsimmainenNostovuorossa() {
+        return ensimmainenNostovuorossa;
+    }
+
+    public void asetaEnsimmainenNostovuorossaUudenPelinAlkuun(boolean x) {
+        ensimmainenNostovuorossa = x;
     }
 }
