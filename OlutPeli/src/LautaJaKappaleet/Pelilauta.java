@@ -52,10 +52,15 @@ public class Pelilauta {
     public ArrayList getListanArvot() {
         return arvot;
     }
-
+    public int getKortinArvo(int monesko){
+        return arvot.get(monesko);
+    }
     public String getKorttiMerkkijonona(int kortinJarjnro) {
         return Integer.toString(arvot.get(kortinJarjnro));
 
+    }
+     public void asetaKorteilleArvot(ArrayList<Integer> eriArvot) {
+        this.arvot = eriArvot;
     }
 
 }

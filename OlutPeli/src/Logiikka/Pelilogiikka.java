@@ -6,6 +6,7 @@ package Logiikka;
 
 import LautaJaKappaleet.Pelaaja;
 import LautaJaKappaleet.Pelilauta;
+import java.util.ArrayList;
 
 /**
  * Luokka, jossa on kortin kääntämisen toiminnot
@@ -46,10 +47,11 @@ public class Pelilogiikka {
     public Pelilogiikka() {
         pelaaja = new Pelaaja();
         alustus();
-        
+
     }
+
     /**
-     * Metodi luo uuden pelilaudan ja alustaa tarvittavat alkuarvot uuden pelin 
+     * Metodi luo uuden pelilaudan ja alustaa tarvittavat alkuarvot uuden pelin
      * aloittamista varten
      */
     public void alustus() {
@@ -72,7 +74,7 @@ public class Pelilogiikka {
         if (ensimmainenNostovuorossa) {
             asetaEkaKortti(moneskoKortti);
             asetaEnsimmainenNostovuorossa(false);
-            return "Ensimmäinen nosto";
+            return "Ensimmäinen kääntö";
         } else {
             if (moneskoKortti == ekaKortti) {
                 return "Sama kortti";
@@ -87,8 +89,8 @@ public class Pelilogiikka {
 
     /**
      * Lisää pelaajan yritysten ja parien määrää(jos löytyy kaksi samaa).
-     * Palauttaa käyttöliittymälle merkkijonon, joka kertoo onko kaksi käännettyä 
-     * korttia pari vai ei.
+     * Palauttaa käyttöliittymälle merkkijonon, joka kertoo onko kaksi
+     * käännettyä korttia pari vai ei.
      *
      * @param pelaaja Pelaamassa oleva pelaaja
      * @param moneskoKortti kertoo monesko kortti on taulussa.
@@ -118,10 +120,10 @@ public class Pelilogiikka {
         }
         return false;
     }
-    
+
     /**
-     * Seuraavat metodit ovat kaikki aseta -tai get-metodeita, joten on ehkä hieman 
-     * tarpeetonta selvittää niiden toimintoja 
+     * Seuraavat metodit ovat kaikki aseta -tai get-metodeita, joten on ehkä
+     * hieman tarpeetonta selvittää niiden toimintoja
      */
     public void asetaOnkoKaksiKaannettyna(boolean onkoKaksiKaannettyna) {
         kaksiKorttiaKaannettyna = onkoKaksiKaannettyna;
@@ -166,4 +168,6 @@ public class Pelilogiikka {
     public void asetaEnsimmainenNostovuorossaUudenPelinAlkuun(boolean x) {
         ensimmainenNostovuorossa = x;
     }
+
+   
 }

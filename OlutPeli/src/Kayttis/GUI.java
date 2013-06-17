@@ -142,7 +142,7 @@ public final class GUI extends JPanel implements ActionListener {
      */
     private void teeKortit() {
         for (int i = 0; i < kortit.length; i++) {
-            kortit[i] = new JButton("Öl");
+            kortit[i] = new JButton("");
             kortit[i].addActionListener(this);
         }
         peli.getPelilauta().arvotListaan(kortit.length);
@@ -247,8 +247,8 @@ public final class GUI extends JPanel implements ActionListener {
      * @param toinen käännetty kortti
      */
     public void kaannaKaannetytTakaisinJotkaEivatOlleetPari(int ensimmainen, int toinen) {
-        kortit[ensimmainen].setText("Öl");
-        kortit[toinen].setText("Öl");
+        kortit[ensimmainen].setText("");
+        kortit[toinen].setText("");
 
     }
 
