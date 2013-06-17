@@ -1,9 +1,12 @@
+package LautaJaKappaleetTest;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
 import LautaJaKappaleet.Pelaaja;
+import Logiikka.Pelilogiikka;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -12,16 +15,19 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Testaa pelaajan nimeä sekä löydettyjä pareja ja yritysten määrää.
+ * 
  * @author samiahl
  */
 public class PelaajaTest {
     
     Pelaaja pelaaja;
+    Pelilogiikka peli;
 
     @Before
     public void setUp() {
-        pelaaja = new Pelaaja();
+        peli = new Pelilogiikka();
+        pelaaja = peli.getPelaaja();
     }
 
     @Test
